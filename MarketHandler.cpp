@@ -29,6 +29,8 @@ void MarketHandler::bFile()
 {
     MarketHandler::Message m;
 
+    uint8_t id;
+
     ifstream myFile(filename, ios::in | ios::binary);
     myFile.seekg(0, ios::end);
     size_t size = myFile.tellg();
@@ -47,15 +49,9 @@ void MarketHandler::bFile()
         // so it is usable again.
     }
 
-    cout << "So far so good! The first identifier is: " << buffer << endl;
+    myFile.read((char *)&id, 6);
 
-    /*     ofstream f(filename, ios::out | ios::binary);
-        if (!f)
-        {
-            cout << "Cannot open file!" << endl;
-            return;
-        }
-     */
+    cout << "id is: " << id << endl;
 }
 
 MarketHandler::~MarketHandler()
