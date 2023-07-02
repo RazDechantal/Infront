@@ -45,10 +45,6 @@ void MarketHandler::bFile()
     {
         cout << "Reading file failed!" << endl;
         return;
-        // An error occurred!
-        // myFile.gcount() returns the number of bytes read.
-        // calling myFile.clear() will reset the stream state
-        // so it is usable again.
     }
     else
     {
