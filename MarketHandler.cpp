@@ -55,6 +55,24 @@ void MarketHandler::bFile()
         cout << "Got " << myFile.gcount() << " characters:" << endl;
         for (int i = 0; i != myFile.gcount(); ++i)
         {
+            switch (buffer[i])
+            {
+            case 01:
+
+                /* code */
+                break;
+
+            case 02:
+                /* code */
+                break;
+
+            case 03:
+                /* code */
+                break;
+
+            default:
+                break;
+            }
             if (buffer[i] == 03)
             {
                 cout << buffer[i];
