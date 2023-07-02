@@ -15,6 +15,7 @@ public:
 
     string readFile();
     void bFile();
+    string ToHex(const string &s, bool upper_case);
 
     class Message
     {

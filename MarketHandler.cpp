@@ -1,6 +1,8 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <sstream>
+#include <iomanip>
 #include "MarketHandler.h"
 
 MarketHandler::MarketHandler()
@@ -29,7 +31,7 @@ void MarketHandler::bFile()
 {
     MarketHandler::Message m;
 
-    uint8_t id;
+    // uint8_t id;
 
     ifstream myFile(filename, ios::in | ios::binary);
     myFile.seekg(0, ios::end);
@@ -48,10 +50,33 @@ void MarketHandler::bFile()
         // calling myFile.clear() will reset the stream state
         // so it is usable again.
     }
+    else
+    {
+        cout << "Got " << myFile.gcount() << " characters:" << endl;
+        for (int i = 0; i != myFile.gcount(); ++i)
+        {
+            if (buffer[i] == 03)
+            {
+                cout << buffer[i];
+            }
+        }
+        cout << endl;
+    }
 
-    myFile.read((char *)&id, 6);
+    std::string tohexed = ToHex(std::string(buffer, size), true);
 
-    cout << "id is: " << id << endl;
+    std::cout << "Buffer: " << buffer << std::endl;
+    std::cout << "Conversion to Hex: " << tohexed << std::endl;
+}
+
+string MarketHandler::ToHex(const string &s, bool upper_case)
+{
+    std::ostringstream ret;
+
+    for (string::size_type i = 0; i < s.length(); ++i)
+        ret << std::hex << std::setfill('0') << std::setw(2) << (upper_case ? std::uppercase : std::nouppercase) << (int)s[i];
+
+    return ret.str();
 }
 
 MarketHandler::~MarketHandler()
