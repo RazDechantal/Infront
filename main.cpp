@@ -12,5 +12,7 @@ int main()
 
     mh.bFile();
 
+    writeFile();
+
     return 0;
 }
