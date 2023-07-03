@@ -33,3 +33,4 @@ void parseMessage(string buffer, int header, int position);
 void writeFile();
 template <typename T>
 std::ofstream &operator<<(std::ofstream &s, std::vector<T> v);
+void printMessages();

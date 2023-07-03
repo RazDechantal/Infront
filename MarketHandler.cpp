@@ -86,21 +86,6 @@ void MarketHandler::bFile()
             }
         }
     }
-    cout << "Number of messages in queue: " << Messages.size() << endl;
-    cout << endl;
-
-    std::cout << "Trade messages based on their listings" << endl;
-    for (unsigned i = 0; i < Messages.size(); i++)
-    {
-        std::cout << "trade id \t|\t Bid \t|\t Ask \t|\t quantity \t| \t Price \t| \t Time " << endl;
-        // std::cout << "______________________________________________________________________________________________________________________________" << endl;
-        std::cout << Messages.at(i).trade_id
-                  << "\t\t" << Messages.at(i).best_bid
-                  << "\t\t" << Messages.at(i).best_ask
-                  << "\t\t" << Messages.at(i).quantity
-                  << "\t\t" << Messages.at(i).price
-                  << "\t\t" << Messages.at(i).timestamp << endl;
-    }
 
     // cout << endl;
 }
@@ -151,6 +136,8 @@ void parseMessage(string buffer, int header, int position)
     // For Best
     if (header == Best)
     {
+        // header
+        m._header = 01;
         // Listing
         for (int j = listing_start; j <= listing_end; j++)
         {
@@ -199,6 +186,8 @@ void parseMessage(string buffer, int header, int position)
 
     if (header == Trade)
     {
+        // header
+        m._header = 02;
         for (int j = listing_start; j <= listing_end; j++)
         {
             if (isalpha(buffer[j]) || isdigit(buffer[j]))
@@ -273,6 +262,8 @@ void parseMessage(string buffer, int header, int position)
 
     if (header == TradeCancellation)
     {
+        // header
+        m._header = 03;
         for (int j = listing_start; j <= listing_end; j++)
         {
             if (isalpha(buffer[j]) || isdigit(buffer[j]))
@@ -304,6 +295,25 @@ void parseMessage(string buffer, int header, int position)
 
     return;
 }
+void printMessages()
+{
+    cout << "Number of messages in queue: " << Messages.size() << endl;
+    cout << endl;
+
+    std::cout << "Trade messages based on their listings" << endl;
+    std::cout << "Type of traade     trade id     Bid \t\t Ask \t\t quantity \t Price \t\t Time " << endl;
+    for (unsigned i = 0; i < Messages.size(); i++)
+    {
+        std::cout << "______________________________________________________________________________________________________________________________" << endl;
+        std::cout << Messages.at(i)._header
+                  << "\t " << Messages.at(i).trade_id
+                  << "\t " << Messages.at(i).best_bid
+                  << "\t\t" << Messages.at(i).best_ask
+                  << "\t\t" << Messages.at(i).quantity
+                  << "\t" << Messages.at(i).price
+                  << "\t\t" << Messages.at(i).timestamp << endl;
+    }
+}
 
 template <typename T>
 std::ofstream &operator<<(std::ofstream &s, std::vector<T> v)
@@ -315,16 +325,38 @@ std::ofstream &operator<<(std::ofstream &s, std::vector<T> v)
     return s;
 }
 
+ostream &operator<<(ostream &output, const message &m)
+{
+    output << m << endl;
+    return output;
+}
+
 void writeFile()
 {
     std::ofstream myfile;
-    myfile.open("example.txt");
+    myfile.open("output.txt");
 
-    for (auto m : Messages)
+    double highestBid = 0;
+    double highestAsk = 0;
+    int numberOfTrade = 0;
+    int32_t sumOfQuantity = 0;
+    int64_t totalTurnOver = 0;
+    for (auto &m : Messages)
     {
-        myfile << m << endl;
+        if (m.best_bid > highestBid)
+            highestBid = m.best_bid;
+        if (m.best_ask > highestAsk)
+            highestAsk = m.best_ask;
+        if (m._header == 02)
+            numberOfTrade++;
+        sumOfQuantity += m.quantity;
+        totalTurnOver += (m.price * m.quantity);
     }
-    myfile << "Writing this to a file.\n";
+    myfile << "highest bid: " << highestBid
+           << " highest ask: " << highestAsk
+           << " Total number of trades " << numberOfTrade
+           << " Total turn over " << totalTurnOver << endl;
+    // myfile << "Writing this to a file.\n";
     myfile.close();
     return;
 }

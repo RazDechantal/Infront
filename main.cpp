@@ -10,8 +10,12 @@ int main()
 
     MarketHandler mh(file);
 
+    // Reading and parsing the files
     mh.bFile();
 
+    // Printing the message
+    printMessages();
+    // writes the messages to the file
     writeFile();
 
     return 0;
