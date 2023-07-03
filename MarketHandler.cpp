@@ -320,11 +320,11 @@ void writeFile()
     std::ofstream myfile;
     myfile.open("example.txt");
 
-    /*     for (auto m : Messages)
-        {
-            myfile << m << endl;
-        }
-     */ myfile << "Writing this to a file.\n";
+    for (auto m : Messages)
+    {
+        myfile << m << endl;
+    }
+    myfile << "Writing this to a file.\n";
     myfile.close();
     return;
 }
