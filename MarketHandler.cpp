@@ -315,16 +315,6 @@ void printMessages()
     }
 }
 
-template <typename T>
-std::ofstream &operator<<(std::ofstream &s, std::vector<T> v)
-{
-    for (auto &elem : v)
-    {
-        s << elem << endl;
-    }
-    return s;
-}
-
 ostream &operator<<(ostream &output, const message &m)
 {
     output << m << endl;
@@ -356,7 +346,6 @@ void writeFile()
            << " highest ask: " << highestAsk
            << " Total number of trades " << numberOfTrade
            << " Total turn over " << totalTurnOver << endl;
-    // myfile << "Writing this to a file.\n";
     myfile.close();
     return;
 }

@@ -16,10 +16,6 @@ public:
     void bFile();
 
     ~MarketHandler();
-
-private:
-    double _length;
-    std::string symbol = "";
 };
 enum MessageType
 {
