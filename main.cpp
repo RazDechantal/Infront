@@ -14,7 +14,7 @@ int main()
     mh.bFile();
 
     // Printing the message
-    printMessages();
+    // printMessages();
     // writes the messages to the file
     writeFile();
 

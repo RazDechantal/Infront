@@ -163,7 +163,7 @@ void parseMessage(string buffer, int header, int position)
         }
         i = 0;
         std::memcpy(&(m.best_bid), &bestBid, sizeof(double));
-        m.best_bid = (bestBid[0] << 0) | (bestBid[1] << 8) | (bestBid[2] << 16) | ((unsigned)bestBid[3] << 24);
+        // m.best_bid = (bestBid[0] << 0) | (bestBid[1] << 8) | (bestBid[2] << 16) | ((unsigned)bestBid[3] << 24);
         cout << "In Best bid is: " << m.best_bid << endl;
 
         // best ask

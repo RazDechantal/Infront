@@ -1,1 +1,1 @@
-highest bid: 5.42066e+08 highest ask: 8.08473e+08 Total number of trades 6 Total turn over 1743646481785964544
+highest bid: 6.95296e-310 highest ask: 8.08473e+08 Total number of trades 6 Total turn over 1743646481785964544
